@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dueller's Point Pokemon Build-&-Battle Registration</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0ebf8;
+            margin: 0;
+        }
+
+        .header {
+            background: #673ab7;
+            height: 200px;
+        }
+
+        .form-container {
+            background: white;
+            width: 600px;
+            margin: -120px auto 50px auto;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        .subheader {
+            font-size: 14px;
+            color: #555;
+            margin-top: 5px;
+        }
+
+        .question {
+            margin-top: 25px;
+        }
+
+        input {
+            width: 100%;
+            border: none;
+            border-bottom: 2px solid #ccc;
+            font-size: 16px;
+            padding: 10px 5px;
+        }
+
+        input:focus {
+            outline: none;
+            border-bottom: 2px solid #673ab7;
+        }
+
+        button {
+            margin-top: 30px;
+            background: #673ab7;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #5a2ea6;
+        }
+
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="header"></div>
+
+    <div class="form-container">
+
+        <h2>ME3 Perfect Order: Pre-release Registration</h2>
+        <p class="subheader">
+            This is the registration form for the wait-list for Build-&-Battle later on.
+            Please fill up and we will announce the winning participants later!
+        </p>
+
+        {% if error %}
+        <div class="error">{{ error }}</div>
+        {% endif %}
+
+        <form action="/submit" method="post">
+
+            <div class="question">
+                <label>Name *</label><br>
+                <input type="text" name="name" required>
+            </div>
+
+            <div class="question">
+                <label>Trainer ID (Trainer Web) *</label><br>
+                <input type="text" name="trainer_id" required>
+            </div>
+
+            <div class="question">
+                <label>Contact Number</label><br>
+                <input type="text" name="contact">
+            </div>
+
+            <button type="submit">Submit</button>
+
+        </form>
+
+    </div>
+
+</body>
+
+</html>
