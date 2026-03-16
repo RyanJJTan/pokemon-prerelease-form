@@ -30,13 +30,18 @@ def submit():
     return render_template("thankyou.html", lucky_number=lucky_number)
 
 from flask import send_file
-import export_excel  # your script logic here
+from export_excel import run_export
 
 @app.route("/export")
 def export():
-    # Assume export_excel.py creates 'participants.xlsx'
-    export_excel.run_export()  # modify your script to have a function
-    return send_file("participants.xlsx", as_attachment=True)
+    try:
+        # Generate Excel
+        excel_file = run_export()
+        # Send file as attachment
+        return send_file(excel_file, as_attachment=True)
+    except Exception as e:
+        # Show error message instead of generic 500
+        return f"Error generating Excel: {e}", 500
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
