@@ -29,25 +29,14 @@ def submit():
 
     return render_template("thankyou.html", lucky_number=lucky_number)
 
+from flask import send_file
+import export_excel  # your script logic here
 
-@app.route("/qr")
-def qr_code():
-    # Replace with your local IP for phone access
-    local_ip = "http://192.168.1.100:5000"  # <-- Change this to your PC's LAN IP
-    qr = qrcode.QRCode(
-        version=1,
-        box_size=10,
-        border=4
-    )
-    qr.add_data(local_ip)
-    qr.make(fit=True)
-
-    img = qr.make_image(fill="black", back_color="white")
-    buf = io.BytesIO()
-    img.save(buf)
-    buf.seek(0)
-    return send_file(buf, mimetype='image/png')
-
+@app.route("/export")
+def export():
+    # Assume export_excel.py creates 'participants.xlsx'
+    export_excel.run_export()  # modify your script to have a function
+    return send_file("participants.xlsx", as_attachment=True)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
