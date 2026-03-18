@@ -12,11 +12,6 @@ DB_NAME = "participants.db"
 
 
 def init_db():
-    """
-    Initializes the database by creating the 'participants' table if it doesn't exist.
-    This is called once on app startup to ensure the schema is ready before any requests.
-    """
-
     # Open a connection to the database file (creates the file if it doesn't exist)
     conn = sqlite3.connect(DB_NAME)
 
@@ -29,8 +24,7 @@ def init_db():
     # - name: participant's full name (text)
     # - trainer_id: the trainer's ID associated with the participant (text)
     # - contact: optional contact information (text)
-    # - lucky_number: a randomly assigned number given to the participant upon regi
-stration
+    # - lucky_number: a randomly assigned number given to the participant upon registration
     c.execute("""
     CREATE TABLE IF NOT EXISTS participants(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -48,18 +42,6 @@ stration
 
 
 def add_participant(name, trainer_id, contact):
-    """
-    Inserts a new participant record into the database and returns their lucky number.
-
-    Parameters:
-        name (str): The participant's full name.
-        trainer_id (str): The trainer ID associated with the participant.
-        contact (str): Optional contact information for the participant.
-
-    Returns:
-        int: The randomly generated lucky number assigned to the participant.
-    """
-
     # --- Generate lucky number ---
     # Randomly pick a number between 1 and 999 (inclusive) to assign to this participant.
     lucky_number = random.randint(1, 999)
