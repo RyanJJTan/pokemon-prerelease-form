@@ -1,17 +1,18 @@
+# imports of what is needed.
 from flask import Flask, render_template, request, send_file
 from database import init_db, add_participant
-import qrcode
 import io
 
+# Initialization
 app = Flask(__name__)
 init_db()
 
-
+# Home
 @app.route("/")
 def home():
     return render_template("form.html")
 
-
+# After submitting the form
 @app.route("/submit", methods=["POST"])
 def submit():
     name = request.form.get("name", "").strip()
@@ -29,9 +30,11 @@ def submit():
 
     return render_template("thankyou.html", lucky_number=lucky_number)
 
+# import of export
 from flask import send_file
 from export_excel import run_export
 
+# Admin using /export link
 @app.route("/export")
 def export():
     try:
