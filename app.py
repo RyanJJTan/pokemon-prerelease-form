@@ -1,7 +1,6 @@
 # imports of what is needed.
 from flask import Flask, render_template, request, send_file
 from database import init_db, add_participant
-import io
 
 # Initialization
 app = Flask(__name__)
