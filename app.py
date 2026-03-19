@@ -45,5 +45,23 @@ def export():
         # Show error message instead of generic 500
         return f"Error generating Excel: {e}", 500
 
+ # updatre db (one-time only)
+@app.route("/update-db")
+def update_db():
+    import sqlite3
+
+    conn = sqlite3.connect("participants.db")
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute("ALTER TABLE participants ADD COLUMN created_at TIMESTAMP")
+        conn.commit()
+        return "Database updated successfully!"
+    except Exception as e:
+        return f"Error: {e}"
+
+    finally:
+        conn.close()
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
