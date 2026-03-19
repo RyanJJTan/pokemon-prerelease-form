@@ -4,6 +4,7 @@
 
 import sqlite3  # Built-in Python library for working with SQLite databases
 import random   # Used to generate a random lucky number for each participant
+from datetime import datetime # Used to generate datetime
 
 # --- Database file name ---
 # Defines the SQLite database filename used across all functions in this module.
@@ -32,6 +33,7 @@ def init_db():
         trainer_id TEXT,
         contact TEXT,
         lucky_number INTEGER
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
     """)
 
@@ -53,9 +55,11 @@ def add_participant(name, trainer_id, contact):
     # --- Insert participant record ---
     # Uses parameterized query (?) to safely insert values and prevent SQL injection.
     # Inserts name, trainer_id, contact, and the generated lucky_number into the table.
+    created_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
     c.execute(
-        "INSERT INTO participants (name, trainer_id, contact, lucky_number) VALUES (?, ?, ?, ?)",
-        (name, trainer_id, contact, lucky_number)
+        "INSERT INTO participants (name, trainer_id, contact, lucky_number, created_at) VALUES (?, ?, ?, ?, ?)",
+        (name, trainer_id, contact, lucky_number, created_at)
     )
 
     # --- Commit and close ---
