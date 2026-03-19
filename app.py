@@ -45,5 +45,25 @@ def export():
         # Show error message instead of generic 500
         return f"Error generating Excel: {e}", 500
 
+ # purge db data as admin
+@app.route("/purge")
+def purge():
+    from flask import request
+    import sqlite3
+
+    key = request.args.get("key")
+
+    if key != "dpMTG":
+        return "Unauthorized", 403
+
+    conn = sqlite3.connect("participants.db")
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM participants")
+    conn.commit()
+    conn.close()
+
+    return "Database purged successfully!"
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
